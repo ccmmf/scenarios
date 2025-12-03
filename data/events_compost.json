@@ -16,7 +16,7 @@
     {
       "date": "2016-04-10",
       "event_type": "planting",
-      "leaf_c_kg_m2": 0
+      "leaf_c_kg_m2": 0.0034
     },
     {
       "date": "2016-05-15",
@@ -74,7 +74,7 @@
     {
       "date": "2017-04-10",
       "event_type": "planting",
-      "leaf_c_kg_m2": 0
+      "leaf_c_kg_m2": 0.0034
     },
     {
       "date": "2017-05-15",
@@ -132,7 +132,7 @@
     {
       "date": "2018-04-10",
       "event_type": "planting",
-      "leaf_c_kg_m2": 0
+      "leaf_c_kg_m2": 0.0034
     },
     {
       "date": "2018-05-15",
@@ -190,7 +190,7 @@
     {
       "date": "2019-04-10",
       "event_type": "planting",
-      "leaf_c_kg_m2": 0
+      "leaf_c_kg_m2": 0.0034
     },
     {
       "date": "2019-05-15",
@@ -248,7 +248,7 @@
     {
       "date": "2020-04-10",
       "event_type": "planting",
-      "leaf_c_kg_m2": 0
+      "leaf_c_kg_m2": 0.0034
     },
     {
       "date": "2020-05-15",
@@ -306,7 +306,7 @@
     {
       "date": "2021-04-10",
       "event_type": "planting",
-      "leaf_c_kg_m2": 0
+      "leaf_c_kg_m2": 0.0034
     },
     {
       "date": "2021-05-15",
@@ -364,7 +364,7 @@
     {
       "date": "2022-04-10",
       "event_type": "planting",
-      "leaf_c_kg_m2": 0
+      "leaf_c_kg_m2": 0.0034
     },
     {
       "date": "2022-05-15",
@@ -422,7 +422,7 @@
     {
       "date": "2023-04-10",
       "event_type": "planting",
-      "leaf_c_kg_m2": 0
+      "leaf_c_kg_m2": 0.0034
     },
     {
       "date": "2023-05-15",
@@ -480,7 +480,7 @@
     {
       "date": "2024-04-10",
       "event_type": "planting",
-      "leaf_c_kg_m2": 0
+      "leaf_c_kg_m2": 0.0034
     },
     {
       "date": "2024-05-15",
