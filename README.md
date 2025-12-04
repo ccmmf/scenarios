@@ -83,3 +83,16 @@ All events use site_id = "herb_site_1" and are sorted by date.
 - data/events_zero_till.json
 - data/events_reduced_irrig_drip.json
 - data/events_stacked.json
+
+## References
+
+**OM Application**
+- [CDFA Compost Application Rate White Paper](https://www.cdfa.ca.gov/oefi/healthysoils/docs/CompostApplicationRate_WhitePaper.pdf)
+
+**Fertilization**
+- [USDA Nutrient Management in Organic Systems Western States Implementation Guide](https://www.nrcs.usda.gov/sites/default/files/2024-07/Nutrient-Management-in-Organic-Systems-Western-States-Implementation-Guide.pdf)
+- [UCANR Fertilization Guidelines](https://ucanr.edu/sites/default/files/2019-03/301161.pdf)
+
+**Irrigation**
+- [UCANR Irrigation of Processing Tomatoes](https://ipm.ucanr.edu/agriculture/tomato/irrigation-of-processing-tomatoes/)
+- [Inouye "Crop Water Requirements Imperial Valley"](https://pecanproject.slack.com/archives/C06M2FKU69W/p1764715950101759?thread_ts=1764637090.986109&cid=C06M2FKU69W)
