@@ -95,4 +95,4 @@ All events use site_id = "herb_site_1" and are sorted by date.
 
 **Irrigation**
 - [UCANR Irrigation of Processing Tomatoes](https://ipm.ucanr.edu/agriculture/tomato/irrigation-of-processing-tomatoes/)
-- [Inouye "Crop Water Requirements Imperial Valley"](https://pecanproject.slack.com/archives/C06M2FKU69W/p1764715950101759?thread_ts=1764637090.986109&cid=C06M2FKU69W)
+- [Inouye "Crop Water Requirements Imperial Valley"](https://www.google.com/url?client=internal-element-cse&cx=003744124407919529812:v2-t3gqht48&q=https://nrm.dfg.ca.gov/FileHandler.ashx%3FDocumentID%3D7226&sa=U&ved=2ahUKEwjMneLY_p-RAxXml-4BHd8gEF0QFnoECAEQAQ&usg=AOvVaw2U1Z55QazqYvDc0d0DellL)
