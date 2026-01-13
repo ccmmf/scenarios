@@ -1,0 +1,79 @@
+site_id: herb_site_1
+start_year: 2016
+end_year: 2024
+pecan_events_version: "0.1.0"
+
+baseline:
+  events:
+    - event_type: tillage
+      name: tillage_spring
+      date: "03-20"
+      tillage_eff_0to1: 0.35
+    - event_type: fertilization
+      name: fertilization_spring
+      date: "03-25"
+      nh4_n_kg_m2: 0.02
+    - event_type: planting
+      name: planting_spring
+      date: "04-10"
+      leaf_c_kg_m2: 0.0034
+    - event_type: irrigation
+      name: irrigation_growing
+      date: ["05-15", "06-15", "07-15", "08-15", "09-01", "09-15"]
+      amount_mm: 90
+      method: canopy
+    - event_type: harvest
+      name: harvest_fall
+      date: "10-10"
+      frac_above_removed_0to1: 0.5
+      frac_below_removed_0to1: 0.0
+
+scenarios:
+  baseline: {}
+  compost:
+    events:
+      - event_type: fertilization
+        name: fertilization_spring
+        date: "02-20"
+        org_c_kg_m2: 0.25
+        org_n_kg_m2: 0.015
+        nh4_n_kg_m2: null
+  reduced_till:
+    events:
+      - event_type: tillage
+        name: tillage_spring
+        tillage_eff_0to1: 0.10
+  zero_till:
+    events:
+      - event_type: tillage
+        name: tillage_spring
+        tillage_eff_0to1: 0.0
+  reduced_irrig_drip:
+    events:
+      - event_type: irrigation
+        name: irrigation_growing
+        date:
+          start: "05-01"
+          every_days: 3
+          n_events: 40
+        amount_mm: 8
+        method: soil
+  stacked:
+    events:
+      - event_type: fertilization
+        name: fertilization_spring
+        date: "02-20"
+        org_c_kg_m2: 0.25
+        org_n_kg_m2: 0.015
+        nh4_n_kg_m2: null
+      - event_type: tillage
+        name: tillage_spring
+        tillage_eff_0to1: 0.10
+      - event_type: irrigation
+        name: irrigation_growing
+        date:
+          start: "05-01"
+          every_days: 3
+          n_events: 40
+        amount_mm: 8
+        method: soil
