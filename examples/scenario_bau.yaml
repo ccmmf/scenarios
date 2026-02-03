@@ -1,0 +1,87 @@
+# Business-as-usual (BAU) scenario
+#
+# Represents baseline HSP adoption rates continuing current trends.
+# Based on USDA NASS 2022 Census and CDFA HSP enrollment data.
+#
+
+scenario_id: BAU_2025
+description: |
+  Business as usual scenario reflecting current HSP adoption trends
+  in the San Joaquin Valley. Adoption rates based on USDA NASS 2022
+  Census of Agriculture and CDFA HSP program enrollment data.
+  
+start_year: 2025
+end_year: 2045
+domain: california_counties
+
+adoption:
+  # -- Fresno county --
+  # Largest agricultural county in CA by value
+  
+  - area: Fresno
+    crop_pft: annual_row_crop
+    practice: compost
+    trajectory:
+      2025: 500
+      2030: 750
+      2035: 1000
+      2040: 1200
+      2045: 1500
+    notes: |
+      Baseline compost adoption ~5% of eligible land.
+      Assumes slow linear growth without policy intervention.
+      
+  - area: Fresno
+    crop_pft: annual_row_crop
+    practice: cover_crop
+    trajectory:
+      2025: 2000
+      2030: 2500
+      2035: 3000
+      2040: 3500
+      2045: 4000
+    notes: |
+      Cover crop adoption ~15% baseline.
+      
+  - area: Fresno
+    crop_pft: perennial_woody
+    practice: orchard_floor_cover
+    trajectory:
+      2025: 5000
+      2030: 6000
+      2035: 7000
+      2040: 8000
+      2045: 9000
+    notes: |
+      Orchards with established floor cover.
+
+  # -- Kern county --
+  
+  - area: Kern
+    crop_pft: annual_row_crop
+    practice: compost
+    trajectory:
+      2025: 100
+      2030: 150
+      2040: 250
+      2045: 300
+
+  - area: Kern
+    crop_pft: annual_row_crop
+    practice: reduced_till
+    trajectory:
+      2025: 1000
+      2030: 1200
+      2040: 1500
+      2045: 1800
+
+  # -- Tulare county --
+  
+  - area: Tulare
+    crop_pft: perennial_woody
+    practice: compost
+    trajectory:
+      2025: 800
+      2030: 1000
+      2040: 1400
+      2045: 1600

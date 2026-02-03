@@ -1,0 +1,399 @@
+# Schema definition for CARB scenario specification
+#
+# This schema enables CARB staff to define management adoption trajectories
+# at the county scale for future projection modeling.
+#
+# Reference: CDFA Healthy Soils Program 2026 Practice Guidelines
+#            USDA NRCS Conservation Practice Standards
+#
+
+schema_version: "1.0.0"
+
+# --- Scenario difination schema --- 
+
+scenario:
+  # Required fields
+  scenario_id:
+    type: string
+    required: true
+    description: |
+      Unique identifier for this scenario.
+      Convention: <program>_<variant>_<year> (e.g. "BAU_2025", "HSP_high_2025")
+    examples:
+      - "BAU_2025"
+      - "HSP_high_adoption"
+      - "alternative_1"
+
+  description:
+    type: string
+    required: true
+    description: Human-readable description of scenario intent
+    examples:
+      - "Business as usual - baseline HSP adoption rates"
+      - "High adoption scenario with aggressive compost expansion"
+
+  # Temporal scope
+  start_year:
+    type: integer
+    required: true
+    description: First year of projection
+    constraints:
+      minimum: 2025
+      maximum: 2100
+    default: 2025
+
+  end_year:
+    type: integer
+    required: true
+    description: Final year of projection
+    constraints:
+      minimum: 2025
+      maximum: 2100
+    default: 2045
+
+  # Spatial domain
+  domain:
+    type: string
+    required: true
+    description: |
+      Spatial aggregation unit for adoption specification.
+      Must match available polygon sets.
+    enum:
+      - "california_counties"      # 58 CA counties
+      - "caladapt_climregions"     # 10 Cal-Adapt climate regions
+    default: "california_counties"
+
+
+  # Adoption trajectory list
+  # Each entry defines adoption for one practice in one area over time
+
+  adoption:
+    type: array
+    required: true
+    description: |
+      List of adoption trajectory specifications.
+      Each entry defines how adoption of a specific practice changes
+      over time within a geographic area.
+    items:
+      type: object
+      properties:
+
+        # Geographic scope
+        area:
+          type: string
+          required: true
+          aliases: ["county"]
+          description: |
+            Name of geographic unit within domain.
+            For california_counties: county name (e.g., "Fresno", "Kern")
+            For caladapt_climregions: region name (e.g., "Central Valley")
+            
+            When domain is 'california_counties', 'county:' may be used 
+            instead of 'area:' for readability.
+          examples:
+            - "Fresno"
+            - "Kern"
+            - "Sacramento"
+            - "Central Valley"
+
+        # Crop/PFT filter
+        crop_pft:
+          type: string
+          required: true
+          description: |
+            Plant functional type OR specific crop to which this adoption applies.
+            Use PFT for broad categories, crop name for specific targeting.
+          enum:
+            # Plant functional types (broad)
+            - "annual_row_crop"
+            - "perennial_woody"
+            - "grazing_land"
+            - "all_cropland"
+            # Specific crops (optional granularity)
+            - "processing_tomato"
+            - "almond"
+            - "walnut"
+            - "grape"
+            - "rice"
+            - "corn"
+            - "wheat"
+            - "alfalfa"
+
+        # Practice being adopted
+        practice:
+          type: string
+          required: true
+          description: |
+            HSP practice code. Must be eligible for the specified crop_pft.
+            See practice_eligibility section for constraints.
+          enum:
+            # Soil amendments
+            - "compost"
+            - "biochar"
+            - "mulching"
+            - "whole_orchard_recycling"
+            
+            # Tillage management
+            - "no_till"
+            - "reduced_till"
+            
+            # Cover and vegetation
+            - "cover_crop"
+            - "conservation_cover"
+            - "orchard_floor_cover"
+            - "conservation_crop_rotation"
+            
+            # Agroforestry
+            - "alley_cropping"
+            - "multistory_cropping"
+            - "silvopasture"
+            - "tree_shrub_establishment"
+            
+            # Linear and edge-of-field practices
+            - "hedgerow"
+            - "windbreak"
+            - "field_border"
+            - "filter_strip"
+            - "contour_buffer_strips"
+            - "grassed_waterway"
+            - "herbaceous_wind_barrier"
+            - "vegetative_barrier"
+            - "strip_cropping"
+            
+            # Riparian practices
+            - "riparian_forest_buffer"
+            - "riparian_herbaceous_cover"
+            
+            # Grazing land practices
+            - "prescribed_grazing"
+            - "range_planting"
+            - "pasture_hay_planting"
+            
+            # Special and regional
+            - "delta_rice"
+
+        # Adoption trajectory
+        trajectory:
+          type: object
+          required: true
+          description: |
+            Adoption values by year.
+            Keys are years (integers), values are adoption amounts.
+            
+            Units can be specified as:
+              - Acres (integer): Absolute area of practice implementation
+              - Fraction (0.0-1.0): Proportion of eligible land
+            
+            Years between specified points are linearly interpolated.
+            Trajectory should be monotonically non-decreasing.
+          example:
+            2025: 500
+            2030: 2000
+            2040: 8000
+            2045: 15000
+
+        unit_type:
+          type: string
+          required: false
+          description: Explicit unit specification
+          enum:
+            - "acres"
+            - "fraction"
+          default: "acres"
+
+        notes:
+          type: string
+          required: false
+          description: Optional notes about this adoption specification
+
+
+# --- Practice eligiblity rules ---
+# Complete list of 31 practices from HSP 2026 Practice Guidelines
+# Eligibility based on CDFA requirements and NRCS Conservation Practice Standards
+
+practice_eligibility:
+  # Soil amendments
+  compost:
+    eligible_pfts: ["annual_row_crop", "perennial_woody", "grazing_land", "all_cropland"]
+    nrcs_code: "CPS 336"
+    rate: "3-8 tons/ac"
+    
+  biochar:
+    eligible_pfts: ["annual_row_crop", "perennial_woody"]
+    nrcs_code: null
+    rate: "1-6 tons/ac"
+    note: "Requires TAP certification; soil suitability via Web Soil Survey"
+    
+  mulching:
+    eligible_pfts: ["annual_row_crop", "perennial_woody"]
+    nrcs_code: "CPS 484"
+    note: "Natural materials or wood chips"
+    
+  whole_orchard_recycling:
+    eligible_pfts: ["perennial_woody"]
+    nrcs_code: "CPS 336"
+    note: "Orchards only; trees must be 10 years or older; not vineyards"
+
+  # Tillage management
+  no_till:
+    eligible_pfts: ["annual_row_crop", "perennial_woody"]
+    nrcs_code: "CPS 329"
+    note: "Only fields with prior conventional tillage eligible"
+    stir_threshold: 20
+    
+  reduced_till:
+    eligible_pfts: ["annual_row_crop"]
+    nrcs_code: "CPS 345"
+    note: "Only fields with prior conventional tillage eligible"
+    stir_range: [20, 60]
+
+  # Cover and vegetation
+  cover_crop:
+    eligible_pfts: ["annual_row_crop", "perennial_woody"]
+    nrcs_code: "CPS 340"
+    note: "Orchard and vineyard applications limited to alleys"
+    
+  conservation_cover:
+    eligible_pfts: ["annual_row_crop"]
+    nrcs_code: "CPS 327"
+    note: "Permanent vegetative cover; converts cropland"
+    
+  orchard_floor_cover:
+    eligible_pfts: ["perennial_woody"]
+    nrcs_code: "CPS 327"
+    note: "Perennial cover in alleys or whole field"
+    
+  conservation_crop_rotation:
+    eligible_pfts: ["annual_row_crop"]
+    nrcs_code: "CPS 328"
+    note: "Planned sequence of crops; perennial hayfields not eligible"
+
+  # Agroforestry
+  alley_cropping:
+    eligible_pfts: ["annual_row_crop"]
+    nrcs_code: "CPS 311"
+    note: "Trees in single rows with crops in alleys; replaces approximately 20% of cropland"
+    
+  multistory_cropping:
+    eligible_pfts: ["annual_row_crop"]
+    nrcs_code: "CPS 379"
+    note: "Forest farming; trees as overstory for annual crops"
+    
+  silvopasture:
+    eligible_pfts: ["grazing_land"]
+    nrcs_code: "CPS 381"
+    note: "Trees and forages on same land unit"
+    
+  tree_shrub_establishment:
+    eligible_pfts: ["annual_row_crop", "grazing_land"]
+    nrcs_code: "CPS 612"
+    note: "Woody plants on cropland or grassland"
+
+  # Linear and edge-of-field practices
+  hedgerow:
+    eligible_pfts: ["annual_row_crop", "perennial_woody", "grazing_land"]
+    nrcs_code: "CPS 422"
+    note: "Dense woody vegetation; field borders; minimum 3 species"
+    
+  windbreak:
+    eligible_pfts: ["annual_row_crop", "perennial_woody", "grazing_land"]
+    nrcs_code: "CPS 380"
+    note: "Single row of trees or shrubs; field borders"
+    
+  field_border:
+    eligible_pfts: ["annual_row_crop"]
+    nrcs_code: "CPS 386"
+    note: "Herbaceous permanent vegetation at field edge"
+    
+  filter_strip:
+    eligible_pfts: ["annual_row_crop", "perennial_woody"]
+    nrcs_code: "CPS 393"
+    note: "Herbaceous strip to remove contaminants from runoff"
+    
+  contour_buffer_strips:
+    eligible_pfts: ["annual_row_crop"]
+    nrcs_code: "CPS 332"
+    note: "Hillslope cropland with sheet or rill erosion"
+    
+  grassed_waterway:
+    eligible_pfts: ["annual_row_crop"]
+    nrcs_code: "CPS 412"
+    note: "Shaped channel with vegetation; for gully erosion control"
+    
+  herbaceous_wind_barrier:
+    eligible_pfts: ["annual_row_crop"]
+    nrcs_code: "CPS 603"
+    note: "Narrow herbaceous strips within field"
+    
+  vegetative_barrier:
+    eligible_pfts: ["annual_row_crop"]
+    nrcs_code: "CPS 601"
+    note: "Stiff, dense vegetation on contour for erosion control"
+    
+  strip_cropping:
+    eligible_pfts: ["annual_row_crop"]
+    nrcs_code: "CPS 585"
+    note: "Erosion-resistant crops alternated with susceptible crops"
+
+  # Riparian practices
+  riparian_forest_buffer:
+    eligible_pfts: ["annual_row_crop", "grazing_land"]
+    nrcs_code: "CPS 391"
+    note: "Trees and shrubs adjacent to watercourse"
+    
+  riparian_herbaceous_cover:
+    eligible_pfts: ["annual_row_crop"]
+    nrcs_code: "CPS 390"
+    note: "Herbaceous cover in transitional zone near water"
+
+  # Grazing land practices
+  prescribed_grazing:
+    eligible_pfts: ["grazing_land"]
+    nrcs_code: "CPS 528"
+    note: "Managed grazing with grazing plan from certified range manager"
+    
+  range_planting:
+    eligible_pfts: ["grazing_land"]
+    nrcs_code: "CPS 550"
+    note: "Perennial vegetation on rangeland"
+    
+  pasture_hay_planting:
+    eligible_pfts: ["annual_row_crop"]
+    nrcs_code: "CPS 512"
+    note: "Converts cropland to pasture or hay production"
+
+  # Special and regional
+  delta_rice:
+    eligible_pfts: ["annual_row_crop"]
+    nrcs_code: null
+    note: "Delta peat soils only (greater than 20% organic matter); converts to rice"
+    geographic_constraint: "Sacramento-San Joaquin Delta"
+
+
+# --- Practice stacking and compatibility rules --- 
+
+practice_compatibility:
+  # Practices that work well together
+  synergistic:
+    - [no_till, cover_crop]
+    - [reduced_till, cover_crop]
+    - [compost, reduced_till]
+    - [compost, cover_crop]
+    - [orchard_floor_cover, compost]
+    - [hedgerow, cover_crop]
+    - [conservation_crop_rotation, cover_crop]
+    
+  # Practices that cannot be combined on the same field
+  incompatible:
+    - [no_till, reduced_till]
+    - [conservation_cover, cover_crop]
+    - [conservation_cover, pasture_hay_planting]
+    
+  # Practices requiring specific sequencing
+  sequential:
+    - practice_a: cover_crop
+      practice_b: no_till
+      constraint: "cover_crop termination before tillage date"
+    - practice_a: compost
+      practice_b: tillage
+      constraint: "compost applied before or incorporated with tillage"

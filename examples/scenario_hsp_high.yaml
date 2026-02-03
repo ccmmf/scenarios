@@ -1,0 +1,107 @@
+# High HSP adoption scenario
+#
+# Represents aggressive expansion of Healthy Soils Program practices.
+# Assumes strong policy support, increased funding, and program growth.
+#
+
+scenario_id: HSP_high_adoption
+description: |
+  High adoption alternative scenario with aggressive expansion of
+  HSP practices across major agricultural counties. Assumes enhanced
+  policy support, increased funding availability, and active outreach.
+  
+start_year: 2025
+end_year: 2045
+domain: california_counties
+
+adoption:
+  # -- Fresno county --
+  
+  - area: Fresno
+    crop_pft: annual_row_crop
+    practice: compost
+    trajectory:
+      2025: 1000
+      2030: 5000
+      2035: 12000
+      2040: 20000
+      2045: 30000
+    notes: |
+      Aggressive compost expansion - 10x BAU by 2045.
+      Assumes compost supply chain development and transport subsidies.
+      
+  - area: Fresno
+    crop_pft: annual_row_crop
+    practice: cover_crop
+    trajectory:
+      2025: 5000
+      2030: 15000
+      2035: 30000
+      2040: 45000
+      2045: 60000
+    notes: |
+      Cover crop adoption targeting 50% of eligible annual cropland.
+      
+  - area: Fresno
+    crop_pft: annual_row_crop
+    practice: no_till
+    trajectory:
+      2025: 500
+      2030: 3000
+      2035: 8000
+      2040: 15000
+      2045: 25000
+    notes: |
+      No-till transition - significant shift from conventional.
+      
+  - area: Fresno
+    crop_pft: perennial_woody
+    practice: orchard_floor_cover
+    trajectory:
+      2025: 8000
+      2030: 20000
+      2035: 35000
+      2040: 50000
+      2045: 65000
+
+  # -- Kern county --
+  
+  - area: Kern
+    crop_pft: annual_row_crop
+    practice: compost
+    trajectory:
+      2025: 500
+      2030: 2500
+      2040: 8000
+      2045: 15000
+      
+  - area: Kern
+    crop_pft: annual_row_crop
+    practice: cover_crop
+    trajectory:
+      2025: 3000
+      2030: 10000
+      2040: 25000
+      2045: 40000
+
+  # -- Tulare county --
+  
+  - area: Tulare
+    crop_pft: perennial_woody
+    practice: compost
+    trajectory:
+      2025: 2000
+      2030: 8000
+      2040: 20000
+      2045: 35000
+      
+  - area: Tulare
+    crop_pft: perennial_woody
+    practice: whole_orchard_recycling
+    trajectory:
+      2025: 500
+      2030: 2000
+      2040: 6000
+      2045: 10000
+    notes: |
+      WOR at orchard replanting - ~5% of orchards per year.
